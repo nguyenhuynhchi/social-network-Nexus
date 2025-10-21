@@ -1,4 +1,4 @@
-package com.chi_001.authentication.dto.request;
+package com.chi_001.authentication.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

@@ -1,7 +1,7 @@
 package com.chi_001.authentication.repository.httpclient;
 
 import com.chi_001.authentication.configuration.AuthenticationRequestInterceptor;
-import com.chi_001.authentication.dto.request.ApiResponse;
+import com.chi_001.authentication.dto.ApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

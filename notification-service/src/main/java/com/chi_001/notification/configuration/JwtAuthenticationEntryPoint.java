@@ -1,17 +1,15 @@
-package com.chi_001.authentication.configuration;
+package com.chi_001.notification.configuration;
 
-import java.io.IOException;
-
+import com.chi_001.notification.dto.ApiResponse;
+import com.chi_001.notification.exception.ErrorCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import com.chi_001.authentication.dto.ApiResponse;
-import com.chi_001.authentication.exception.ErrorCode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
