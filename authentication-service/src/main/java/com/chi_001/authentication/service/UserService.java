@@ -1,9 +1,11 @@
 package com.chi_001.authentication.service;
 
+import com.chi_001.event.dto.NotificationEvent;
 import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,6 +41,7 @@ public class UserService {
     ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     public UserResponse createUser(UserCreationRequest request) {
         User user = userMapper.toUser(request);
@@ -60,6 +63,16 @@ public class UserService {
         profileRequest.setUserId(user.getId());
 
         var profile = profileClient.createProfile(profileRequest);
+
+        NotificationEvent notificationEvent = NotificationEvent.builder()
+            .channel("EMAIL")
+            .recipient(request.getEmail())
+            .subject("Welcome to Nexus")
+            .body("Hello, " + request.getUsername())
+            .build();
+
+        // Publish message to kafka
+        kafkaTemplate.send("notification-delivery", notificationEvent);
 
         var userCreationResponse = userMapper.toUserResponse(user);
         userCreationResponse.setId(profile.getResult().getId());

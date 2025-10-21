@@ -1,6 +1,6 @@
 package com.chi_001.authentication.controller;
 
-import com.chi_001.authentication.dto.request.ApiResponse;
+import com.chi_001.authentication.dto.ApiResponse;
 import com.chi_001.authentication.dto.request.AuthenticationRequest;
 import com.chi_001.authentication.dto.request.IntrospectRequest;
 import com.chi_001.authentication.dto.request.LogoutRequest;
