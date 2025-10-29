@@ -1,0 +1,21 @@
+server:
+    port: 8084
+    servlet:
+        context-path: /cloudinary
+
+spring:
+  application:
+    name: cloudinary-upload
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+cloudinary:
+  cloud_name: dbkbsz3vy
+  api_key: 862984861691578
+  api_secret: p89CSY2Z1AThzv9a0ena2cx_cqM
+
+
+
