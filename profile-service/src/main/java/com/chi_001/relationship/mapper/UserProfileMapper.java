@@ -1,10 +1,10 @@
-package com.chi_001.profile.mapper;
+package com.chi_001.relationship.mapper;
 
 import org.mapstruct.Mapper;
 
-import com.chi_001.profile.dto.request.ProfileCreationRequest;
-import com.chi_001.profile.dto.response.UserProfileResponse;
-import com.chi_001.profile.entity.UserProfile;
+import com.chi_001.relationship.dto.request.ProfileCreationRequest;
+import com.chi_001.relationship.dto.response.UserProfileResponse;
+import com.chi_001.relationship.entity.UserProfile;
 
 @Mapper(componentModel = "spring")
 public interface UserProfileMapper {

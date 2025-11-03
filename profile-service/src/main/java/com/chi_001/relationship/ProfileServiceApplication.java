@@ -1,4 +1,4 @@
-package com.chi_001.profile;
+package com.chi_001.relationship;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

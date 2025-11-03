@@ -1,4 +1,4 @@
-package com.chi_001.profile.exception;
+package com.chi_001.relationship.exception;
 
 public class AppException extends RuntimeException {
 

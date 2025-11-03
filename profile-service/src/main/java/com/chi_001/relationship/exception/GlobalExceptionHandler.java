@@ -1,6 +1,6 @@
-package com.chi_001.profile.exception;
+package com.chi_001.relationship.exception;
 
-import com.chi_001.profile.dto.ApiResponse;
+import com.chi_001.relationship.dto.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
-package com.chi_001.profile.controller;
+package com.chi_001.relationship.controller;
 
-import com.chi_001.profile.dto.ApiResponse;
-import com.chi_001.profile.dto.response.UserProfileResponse;
-import com.chi_001.profile.service.UserProfileService;
+import com.chi_001.relationship.dto.ApiResponse;
+import com.chi_001.relationship.dto.response.UserProfileResponse;
+import com.chi_001.relationship.service.UserProfileService;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.chi_001.profile.configuration;
+package com.chi_001.relationship.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private static final String[] PUBLIC_ENDPOINTS = {
-        "/internal/users", "/internal/users/**"
+        "/internal/users", "/internal/users/**",
     };
 
     private final CustomJwtDecoder customJwtDecoder;
