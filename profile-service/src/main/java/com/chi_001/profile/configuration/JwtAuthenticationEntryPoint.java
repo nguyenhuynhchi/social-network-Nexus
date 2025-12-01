@@ -1,7 +1,7 @@
-package com.chi_001.relationship.configuration;
+package com.chi_001.profile.configuration;
 
-import com.chi_001.relationship.dto.ApiResponse;
-import com.chi_001.relationship.exception.ErrorCode;
+import com.chi_001.profile.dto.ApiResponse;
+import com.chi_001.profile.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

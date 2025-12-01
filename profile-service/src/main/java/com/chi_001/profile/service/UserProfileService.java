@@ -1,6 +1,5 @@
-package com.chi_001.relationship.service;
+package com.chi_001.profile.service;
 
-<<<<<<< HEAD:profile-service/src/main/java/com/chi_001/profile/service/UserProfileService.java
 import com.chi_001.profile.dto.request.ProfileUpdateRequest;
 import com.chi_001.profile.dto.response.UploadFileResponse;
 import com.chi_001.profile.exception.AppException;
@@ -8,20 +7,16 @@ import com.chi_001.profile.exception.ErrorCode;
 import com.chi_001.profile.repository.httpclient.CloudinaryClient;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.experimental.NonFinal;
-=======
-import com.chi_001.relationship.exception.AppException;
-import com.chi_001.relationship.exception.ErrorCode;
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a:profile-service/src/main/java/com/chi_001/relationship/service/UserProfileService.java
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.chi_001.relationship.dto.request.ProfileCreationRequest;
-import com.chi_001.relationship.dto.response.UserProfileResponse;
-import com.chi_001.relationship.entity.UserProfile;
-import com.chi_001.relationship.mapper.UserProfileMapper;
-import com.chi_001.relationship.repository.UserProfileRepository;
+import com.chi_001.profile.dto.request.ProfileCreationRequest;
+import com.chi_001.profile.dto.response.UserProfileResponse;
+import com.chi_001.profile.entity.UserProfile;
+import com.chi_001.profile.mapper.UserProfileMapper;
+import com.chi_001.profile.repository.UserProfileRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

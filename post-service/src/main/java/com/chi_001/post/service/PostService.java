@@ -90,11 +90,7 @@ public class PostService {
 
         try {
             userProfile = profileClient.getProfile(userId).getResult();
-<<<<<<< HEAD
             log.info(" - Username: {}\t - Fullname: {}", userProfile.getUsername(), userProfile.getFullname());
-=======
-            log.info("Username: {}", userProfile.getUsername());
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
         } catch (Exception e) {
             log.error("Error while getting user profile", e);
         }
@@ -104,21 +100,14 @@ public class PostService {
         var pageData = postRepository.findAllByUserId(userId, pageable);
 
         String username = userProfile != null ? userProfile.getUsername() : null;
-<<<<<<< HEAD
         String fullname = userProfile != null ? userProfile.getFullname() : null;
         String avatar = userProfile != null ? userProfile.getAvatarUrl() : null;
-=======
-        log.info("Username_2: {}", username);
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
         var postList = pageData.getContent().stream().map(post -> {
             var postResponse = postMapper.toPostResponse(post);
             postResponse.setCreated(dateTimeFormatter.format(post.getCreatedDate()));
             postResponse.setUsername(username);
-<<<<<<< HEAD
             postResponse.setFullname(fullname);
             postResponse.setAvatarUrl(avatar);
-=======
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
             return postResponse;
         }).toList();
 

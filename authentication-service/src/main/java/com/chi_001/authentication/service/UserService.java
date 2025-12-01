@@ -1,10 +1,7 @@
 package com.chi_001.authentication.service;
 
-<<<<<<< HEAD
 import com.chi_001.authentication.dto.request.ProfileCreationRequest;
 import com.chi_001.authentication.dto.response.UserProfileResponse;
-=======
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
 import com.chi_001.event.dto.NotificationEvent;
 import java.util.HashSet;
 import java.util.List;
@@ -77,19 +74,8 @@ public class UserService {
             .channel("EMAIL")
             .recipient(request.getEmail())
             .subject("Welcome to Nexus")
-<<<<<<< HEAD
             .body("Hello, " + request.getFullname())
             .build();
-=======
-            .body("Hello, " + request.getUsername())
-            .build();
-
-        // Publish message to kafka
-        kafkaTemplate.send("notification-delivery", notificationEvent);
-
-        var userCreationResponse = userMapper.toUserResponse(user);
-        userCreationResponse.setId(profile.getResult().getId());
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
 
         // Publish message to kafka
         kafkaTemplate.send("notification-delivery", notificationEvent);

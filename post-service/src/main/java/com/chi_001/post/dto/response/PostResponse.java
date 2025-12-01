@@ -20,11 +20,8 @@ public class PostResponse {
     String fileUrl;
     String userId;
     String username;
-<<<<<<< HEAD
     String fullname;
     String avatarUrl;
-=======
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
     String created;
     Instant createdDate;
     Instant modifiedDate;

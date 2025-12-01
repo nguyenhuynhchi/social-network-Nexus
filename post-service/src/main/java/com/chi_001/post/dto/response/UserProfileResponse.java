@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserProfileResponse {
-<<<<<<< HEAD
 
     String id;
     String username;
@@ -24,13 +23,4 @@ public class UserProfileResponse {
     LocalDate dob;
     String city;
     String avatarUrl;
-=======
-    String id;
-    String username;
-    String email;
-    String firstName;
-    String lastName;
-    LocalDate dob;
-    String city;
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
 }

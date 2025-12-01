@@ -1,4 +1,4 @@
-package com.chi_001.relationship.exception;
+package com.chi_001.profile.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -15,16 +15,10 @@ public enum ErrorCode {
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
-<<<<<<< HEAD:profile-service/src/main/java/com/chi_001/profile/exception/ErrorCode.java
     UNKNOWN_RELATIONSHIP(1009, "Unknown relationship", HttpStatus.BAD_REQUEST),
     FRIEND_REQUEST_NOT_EXISTED(1010, "Friend request not existed", HttpStatus.NOT_FOUND),
     ALREADY_FRIENDS(1011, "You are already friends", HttpStatus.BAD_REQUEST),
     FILE_SIZE_EXCEEDED(1012, "File size exceeds the limit", HttpStatus.BAD_REQUEST)
-=======
-    UNKNOW_RELATIONSHIP(1009, "Unknown relationship", HttpStatus.BAD_REQUEST),
-    FRIEND_REQUEST_NOT_EXISTED(1010, "Friend request not existed", HttpStatus.NOT_FOUND),
-    ALREADY_FRIENDS(1011, "You are already friends", HttpStatus.BAD_REQUEST)
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a:profile-service/src/main/java/com/chi_001/relationship/exception/ErrorCode.java
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

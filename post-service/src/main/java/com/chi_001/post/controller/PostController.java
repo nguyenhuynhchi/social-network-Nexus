@@ -27,15 +27,8 @@ public class PostController {
 //    @PostMapping(value = "/create", consumes = "multipart/form-data")
     @PostMapping("/create")
     ApiResponse<PostResponse> createPost(
-<<<<<<< HEAD
         @RequestParam("content") PostRequest request,
         @RequestParam(value = "file",  required = false)MultipartFile file)
-=======
-//        @RequestPart("request") PostRequest request,
-//        @RequestPart(value = "file", required = false) MultipartFile file)
-        @RequestParam("request") PostRequest request,
-        @RequestParam("file")MultipartFile file)
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
     {
 
         log.info("Content: {}", request.getContent());

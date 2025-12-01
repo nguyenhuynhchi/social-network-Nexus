@@ -1,4 +1,4 @@
-package com.chi_001.relationship.configuration;
+package com.chi_001.profile.configuration;
 
 import com.nimbusds.jwt.SignedJWT;
 import org.springframework.security.oauth2.jwt.Jwt;

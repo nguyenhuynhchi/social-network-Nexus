@@ -1,4 +1,4 @@
-package com.chi_001.relationship.dto;
+package com.chi_001.profile.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;

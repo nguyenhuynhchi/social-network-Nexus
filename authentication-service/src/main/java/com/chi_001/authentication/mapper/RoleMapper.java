@@ -9,10 +9,6 @@ import com.chi_001.authentication.entity.Role;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
-<<<<<<< HEAD
-=======
-//    @Mapping(target = "permissions", ignore = true)
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
     Role toRole(RoleRequest request);
 
     RoleResponse toRoleResponse(Role role);

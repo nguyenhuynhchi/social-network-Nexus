@@ -1,4 +1,4 @@
-package com.chi_001.relationship.configuration;
+package com.chi_001.profile.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

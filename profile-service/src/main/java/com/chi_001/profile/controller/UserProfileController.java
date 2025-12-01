@@ -1,15 +1,9 @@
-package com.chi_001.relationship.controller;
+package com.chi_001.profile.controller;
 
-<<<<<<< HEAD:profile-service/src/main/java/com/chi_001/profile/controller/UserProfileController.java
 import com.chi_001.profile.dto.ApiResponse;
 import com.chi_001.profile.dto.request.ProfileUpdateRequest;
 import com.chi_001.profile.dto.response.UserProfileResponse;
 import com.chi_001.profile.service.UserProfileService;
-=======
-import com.chi_001.relationship.dto.ApiResponse;
-import com.chi_001.relationship.dto.response.UserProfileResponse;
-import com.chi_001.relationship.service.UserProfileService;
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a:profile-service/src/main/java/com/chi_001/relationship/controller/UserProfileController.java
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

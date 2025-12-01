@@ -1,30 +1,17 @@
 package com.chi_001.relationship.service;
 
-<<<<<<< HEAD
 import com.chi_001.profile.dto.response.UserProfileResponse;
 import com.chi_001.profile.entity.UserProfile;
 import com.chi_001.profile.exception.AppException;
 import com.chi_001.profile.exception.ErrorCode;
 import com.chi_001.profile.mapper.UserProfileMapper;
 import com.chi_001.profile.repository.UserProfileRepository;
-=======
-import com.chi_001.relationship.dto.response.UserProfileResponse;
-import com.chi_001.relationship.entity.UserProfile;
-import com.chi_001.relationship.exception.AppException;
-import com.chi_001.relationship.exception.ErrorCode;
-import com.chi_001.relationship.mapper.UserProfileMapper;
-import com.chi_001.relationship.repository.UserProfileRepository;
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
 import java.util.List;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-<<<<<<< HEAD
-=======
-import org.apache.catalina.User;
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -109,11 +96,7 @@ public class FriendshipService {
             throw new AppException(ErrorCode.ALREADY_FRIENDS);
         } else if (!relationshipType.get().equals("SENT_REQUEST_TO")) {
             log.warn(" - Invalid relationship type: {}", relationshipType.get());
-<<<<<<< HEAD
             throw new AppException(ErrorCode.UNKNOWN_RELATIONSHIP);
-=======
-            throw new AppException(ErrorCode.UNKNOW_RELATIONSHIP);
->>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
         }
 
         userProfileRepository.acceptFriendRequest(requesterUserId, receiverUserId);
