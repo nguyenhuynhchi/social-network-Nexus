@@ -1,0 +1,31 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /notification
+spring:
+  application:
+    name: notification-service
+  autoconfigure:
+    exclude:   # Bỏ qua cấu hình MongoDB tự động
+      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
+#  data:
+#    mongodb:
+#      uri: mongodb://root:root@localhost:27017/notification-service?authSource=admin
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+notification:
+  email:
+    brevo-url: https://api.brevo.com
+<<<<<<< HEAD
+    brevo-apikey: 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
+=======
+    brevo-apikey: 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
+>>>>>>> 51aa692d1819e013c437e667ebd6b94ea967037a
