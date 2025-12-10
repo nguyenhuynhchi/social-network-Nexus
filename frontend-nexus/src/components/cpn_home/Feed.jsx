@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyPosts } from "../../services/postService";
+import { getMyPosts, getFriendPosts } from "../../services/postService";
 import { isAuthenticated, logOut } from "../../services/authenticationService";
 import Post from "./Post";
 
@@ -19,7 +19,9 @@ export default function Feed() {
   const loadPosts = async (page) => {
     try {
       setLoading(true);
-      const res = await getMyPosts(page);
+      // const res = await getMyPosts(page);
+      const res = await getFriendPosts(page);
+
       const result = res.data.result;
 
       setTotalPages(result.totalPages);
@@ -73,36 +75,53 @@ export default function Feed() {
   }, [hasMore]);
 
   return (
-    <div className="flex-1 px-6 py-4 w-full bg-blue-400">
-      {/* <div className="text-lg font-semibold mb-4">Your posts</div> */}
+    <div
+      className="flex-1 px-4 md:px-8 py-4 w-full bg-blue-300 min-h-screen"
+    >
 
-      {/* Danh sách bài post */}
-      {posts.map((post, index) => {
-        const uniqueKey = `${post.id}-${index}`;
+      {/* Wrapper cho bài post */}
+      <div className="max-w-3xl mx-auto space-y-6">
+        {posts.map((post, index) => {
+          const uniqueKey = `${post.id}-${index}`;
 
-        if (index === posts.length - 1) {
+          if (index === posts.length - 1) {
+            return (
+              <div
+                ref={lastPostRef}
+                key={uniqueKey}
+                className="animate-fadeIn bg-white rounded-2xl shadow-md p-5 hover:shadow-xl transition-shadow"
+              >
+                <Post post={post} />
+              </div>
+            );
+          }
+
           return (
-            <div ref={lastPostRef} key={uniqueKey}>
+            <div
+              key={uniqueKey}
+              className="animate-fadeIn bg-white rounded-2xl shadow-md p-5 hover:shadow-xl transition-shadow"
+            >
               <Post post={post} />
             </div>
           );
-        }
+        })}
 
-        return <Post key={uniqueKey} post={post} />;
-      })}
-
-
-      {/* Loading indicator */}
-      <div className="w-full">
+        {/* Loading */}
         {loading && (
-          <div className="w-full text-center py-4">
-            <span className="text-gray-500">Đang tải...</span>
+          <div className="text-center py-6">
+            <span className="text-gray-600 font-medium animate-pulse">
+              Đang tải...
+            </span>
           </div>
         )}
 
-        {/* No more posts */}
+        {/* Hết bài */}
         {!hasMore && !loading && (
-          <div className="w-full text-center text-black font-semibold py-4">
+          <div
+            className="text-center text-gray-700 font-semibold py-10
+                     bg-white/70 backdrop-blur-lg rounded-2xl shadow-md
+                     animate-fadeIn"
+          >
             Bạn đã xem hết các bài viết 🥳
           </div>
         )}

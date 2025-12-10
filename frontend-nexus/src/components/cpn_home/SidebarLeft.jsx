@@ -1,8 +1,8 @@
-import Avatar from "./Avatar";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { createPost } from "../../services/postService";
 import LoadingModal from "../cpn_other/LoadingModal";
 import Toast from "../cpn_other/Toast";
+import { getMyInfo } from "../../services/userService.js";
 
 export default function SidebarLeft() {
 
@@ -13,6 +13,23 @@ export default function SidebarLeft() {
   const [loading, setLoading] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
   const [toastType, setToastType] = useState("success");
+
+
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        const response = await getMyInfo();
+        console.log("My info:", response);
+        setUserInfo(response.data.result);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+
+    fetchInfo();
+  }, []);
 
   const handleCreatePost = async () => {
     setLoading(true);
@@ -28,8 +45,8 @@ export default function SidebarLeft() {
       setLoading(false);
 
       setTimeout(() => {
-      window.location.reload();   // Reload trang
-    }, 800);
+        window.location.reload();   // Reload trang
+      }, 800);
     }
   }
 
@@ -51,10 +68,14 @@ export default function SidebarLeft() {
   };
 
   return (
-    <div className="w-[250px] bg-blue-100 p-4 h-full flex flex-col gap-4">
+    <div className="w-[250px] bg-gray-100 p-4 h-full flex flex-col gap-4">
       <div className="bg-red-200 p-3 rounded shadow relative flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <Avatar size={40} />
+          <img
+            src={userInfo?.avatarUrl || "/default_avatar_removebg.png"}
+            alt="avatar"
+            className="w-12 h-12 float-right rounded-full object-cover"
+          />
           <textarea
             className="text-[13px] w-full min-h-[90px] p-3 rounded-xl bg-white border border-gray-300 
                focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent 

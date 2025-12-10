@@ -12,6 +12,10 @@ import com.chi_001.post.mapper.PostMapper;
 import com.chi_001.post.repository.PostRepository;
 import com.chi_001.post.repository.httpclient.CloudinaryClient;
 import com.chi_001.post.repository.httpclient.ProfileClient;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
@@ -59,7 +63,8 @@ public class PostService {
                     throw new AppException(ErrorCode.FILE_LIMIT_EXCEEDED);
                 }
 
-                UploadFileResponse uploadFileResponse = cloudinaryClient.uploadFile(file).getResult();
+                UploadFileResponse uploadFileResponse = cloudinaryClient.uploadFile(file)
+                    .getResult();
                 fileUrl = uploadFileResponse.getFileUrl();
 
                 log.info("File uploaded successfully: {}", fileUrl);
@@ -90,7 +95,8 @@ public class PostService {
 
         try {
             userProfile = profileClient.getProfile(userId).getResult();
-            log.info(" - Username: {}\t - Fullname: {}", userProfile.getUsername(), userProfile.getFullname());
+            log.info(" - Username: {}\t - Fullname: {}", userProfile.getUsername(),
+                userProfile.getFullname());
         } catch (Exception e) {
             log.error("Error while getting user profile", e);
         }
@@ -111,6 +117,74 @@ public class PostService {
             return postResponse;
         }).toList();
 
+        return PageResponse.<PostResponse>builder()
+            .currentPage(page)
+            .pageSize(pageData.getSize())
+            .totalPages(pageData.getTotalPages())
+            .totalElements(pageData.getTotalElements())
+            .data(postList)
+            .build();
+    }
+
+    public PageResponse<PostResponse> getPostsOfFriends(int page, int size) {
+
+        // 1. Lấy userId hiện tại
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserId = authentication.getName();
+
+        // 2. Gọi profile-service lấy danh sách bạn bè
+        List<UserProfileResponse> friends;
+
+        try {
+            friends = profileClient.getFriendList().getResult();
+        } catch (Exception e) {
+            log.error("Error while getting friend list", e);
+            friends = Collections.emptyList();
+        }
+
+        // 3. Lấy danh sách userId của bạn bè
+        List<String> friendUserIds = friends.stream()
+            .map(UserProfileResponse::getUserId)
+            .toList();
+
+        // Nếu không có bạn bè → trả về page rỗng
+        if (friendUserIds.isEmpty()) {
+            return PageResponse.<PostResponse>builder()
+                .currentPage(page)
+                .pageSize(size)
+                .totalPages(0)
+                .totalElements(0)
+                .data(Collections.emptyList())
+                .build();
+        }
+
+        // 4. Sort + Pageable
+        Sort sort = Sort.by("createdDate").descending();
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+
+        // 5. Query DB lấy bài viết của bạn bè
+        var pageData = postRepository.findAllByUserIdIn(friendUserIds, pageable);
+
+        // 6. Map profile theo userId để map nhanh hơn
+        Map<String, UserProfileResponse> profileMap = friends.stream()
+            .collect(Collectors.toMap(UserProfileResponse::getUserId, f -> f));
+
+        // 7. Map sang PostResponse
+        var postList = pageData.getContent().stream().map(post -> {
+            var postResponse = postMapper.toPostResponse(post);
+            postResponse.setCreated(dateTimeFormatter.format(post.getCreatedDate()));
+
+            UserProfileResponse profile = profileMap.get(post.getUserId());
+            if (profile != null) {
+                postResponse.setUsername(profile.getUsername());
+                postResponse.setFullname(profile.getFullname());
+                postResponse.setAvatarUrl(profile.getAvatarUrl());
+            }
+
+            return postResponse;
+        }).toList();
+
+        // 8. Build PageResponse
         return PageResponse.<PostResponse>builder()
             .currentPage(page)
             .pageSize(pageData.getSize())

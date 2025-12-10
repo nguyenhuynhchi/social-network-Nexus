@@ -15,6 +15,18 @@ export const getMyPosts = async (page) => {
   });
 };
 
+export const getFriendPosts = async (page) => {
+  return await httpClient.get(API.FRIEND_POST, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+    params: {
+      page: page,
+      size: 10,
+    },
+  });
+};
+
 export const createPost = async (content, file) => {
   const formData = new FormData();
   formData.append("content", content);

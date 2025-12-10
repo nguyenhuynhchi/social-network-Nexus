@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/post-service/pom.xml" />
         <option value="$PROJECT_DIR$/cloudinary-upload/pom.xml" />
         <option value="$PROJECT_DIR$/relationship-service/pom.xml" />
+        <option value="$PROJECT_DIR$/chat-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

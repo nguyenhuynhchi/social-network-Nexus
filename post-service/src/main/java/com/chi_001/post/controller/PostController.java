@@ -47,4 +47,14 @@ public class PostController {
                 .result(postService.getMyPosts(page, size))
                 .build();
     }
+
+    @GetMapping("/friend-posts")
+    ApiResponse<PageResponse<PostResponse>> friendsPosts(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size
+    ){
+        return ApiResponse.<PageResponse<PostResponse>>builder()
+                .result(postService.getPostsOfFriends(page, size))
+                .build();
+    }
 }

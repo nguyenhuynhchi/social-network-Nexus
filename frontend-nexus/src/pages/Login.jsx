@@ -127,9 +127,9 @@ export default function Login() {
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-500">
           Bạn chưa có tài khoản?{" "}
-          {/* <Link to="/dangky" className="text-blue-500 hover:underline">
+          <Link to="/registration" className="text-blue-500 hover:underline">
             Đăng ký ngay !
-          </Link> */}
+          </Link>
         </div>
       </div>
     </div>
