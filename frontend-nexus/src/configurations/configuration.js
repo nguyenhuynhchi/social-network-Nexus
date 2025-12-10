@@ -16,6 +16,7 @@ export const API = {
 
    // Post 
    MY_POST: "/post/my-posts", // GET
+   FRIEND_POST: "/post/friend-posts", // GET
    CREATE_POST: "/post/create", // POST
 
    // Relationship
@@ -27,11 +28,10 @@ export const API = {
    DECLINE_REQUEST: "/profile/friends/decline-request", // DELETE
    UNFRIEND: "/profile/friends/unfriend", // DELETE
 
-
-
-   //   SEARCH_USER: "/profile/users/search",
-   //   MY_CONVERSATIONS: "/chat/conversations/my-conversations",
-   //   CREATE_CONVERSATION: "/chat/conversations/create",
-   //   CREATE_MESSAGE: "/chat/messages/create",
-   //   GET_CONVERSATION_MESSAGES: "/chat/messages",
+   // Chat
+   SEARCH_USER: "/profile/users/search", // POST
+   MY_CONVERSATIONS: "/chat/conversations/my-conversations", // GET
+   CREATE_CONVERSATION: "/chat/conversations/create", // POST
+   CREATE_MESSAGE: "/chat/messages/create", // POST
+   GET_CONVERSATION_MESSAGES: "/chat/messages", // GET
 };

@@ -64,5 +64,8 @@ public interface UserProfileRepository extends Neo4jRepository<UserProfile, Stri
         "RETURN requesters")
     List<UserProfile> findPendingRequestsByUserId(String userId);
 
+
+    List<UserProfile> findAllByFullnameLike(String fullname);
+
 }
 

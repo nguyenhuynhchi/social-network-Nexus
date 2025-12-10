@@ -25,9 +25,14 @@ export const isAuthenticated = async () => {
    let token = getToken();
 
    // Nếu có token và hợp lệ thì return luôn
-   if (token && await isTokenValid(token)) {
-      console.log("Token hợp lệ → không cần refresh");
-      return token;
+   try {   
+      if (token && await isTokenValid(token)) {
+         console.log("Token hợp lệ → không cần refresh");
+         return token;
+      }
+   } catch (error) {
+      console.log("Refresh token thất bại (kiểm tra backend)");
+      return null;
    }
 
    // Nếu refresh đang chạy thì chờ Promise đó
@@ -68,6 +73,7 @@ const refreshToken = async () => {
 
    } catch {
       removeToken();
+      console.log("Refresh token thất bại (kiểm tra backend)");
       return null;
    }
 };

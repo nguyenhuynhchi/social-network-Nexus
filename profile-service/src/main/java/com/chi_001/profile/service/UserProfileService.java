@@ -1,6 +1,7 @@
 package com.chi_001.profile.service;
 
 import com.chi_001.profile.dto.request.ProfileUpdateRequest;
+import com.chi_001.profile.dto.request.SearchUserRequest;
 import com.chi_001.profile.dto.response.UploadFileResponse;
 import com.chi_001.profile.exception.AppException;
 import com.chi_001.profile.exception.ErrorCode;
@@ -124,5 +125,14 @@ public class UserProfileService {
         userProfileMapper.updateUserProfile(profile, request);
 
         return userProfileMapper.toUserProfileResponse(userProfileRepository.save(profile));
+    }
+
+    public List<UserProfileResponse> search(SearchUserRequest request) {
+        var userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<UserProfile> userProfiles = userProfileRepository.findAllByFullnameLike(request.getKeyword());
+        return userProfiles.stream()
+            .filter(userProfile -> !userId.equals(userProfile.getUserId()))
+            .map(userProfileMapper::toUserProfileResponse)
+            .toList();
     }
 }

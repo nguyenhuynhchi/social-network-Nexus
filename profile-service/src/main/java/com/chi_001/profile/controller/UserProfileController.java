@@ -2,6 +2,7 @@ package com.chi_001.profile.controller;
 
 import com.chi_001.profile.dto.ApiResponse;
 import com.chi_001.profile.dto.request.ProfileUpdateRequest;
+import com.chi_001.profile.dto.request.SearchUserRequest;
 import com.chi_001.profile.dto.response.UserProfileResponse;
 import com.chi_001.profile.service.UserProfileService;
 
@@ -60,5 +61,12 @@ public class UserProfileController {
         return ApiResponse.<UserProfileResponse>builder()
                 .result(userProfileService.updateProfile(request))
                 .build();
+    }
+
+    @PostMapping("/search")
+    ApiResponse<List<UserProfileResponse>> search(@RequestBody SearchUserRequest request) {
+        return ApiResponse.<List<UserProfileResponse>>builder()
+            .result(userProfileService.search(request))
+            .build();
     }
 }
