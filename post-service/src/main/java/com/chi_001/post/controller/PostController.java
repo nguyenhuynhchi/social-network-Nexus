@@ -3,13 +3,18 @@ package com.chi_001.post.controller;
 import com.chi_001.post.dto.ApiResponse;
 import com.chi_001.post.dto.PageResponse;
 import com.chi_001.post.dto.request.PostRequest;
+import com.chi_001.post.dto.request.ReactionRequest;
 import com.chi_001.post.dto.response.PostResponse;
+import com.chi_001.post.dto.response.ReactionUserResponse;
 import com.chi_001.post.service.PostService;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +53,17 @@ public class PostController {
                 .build();
     }
 
+    @GetMapping("/of/{userId}")
+    ApiResponse<PageResponse<PostResponse>> getPostsOfOne(
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+        @PathVariable String userId
+    ){
+        return ApiResponse.<PageResponse<PostResponse>>builder()
+            .result(postService.getPostOfOne(userId, page, size))
+            .build();
+    }
+
     @GetMapping("/friend-posts")
     ApiResponse<PageResponse<PostResponse>> friendsPosts(
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -56,5 +72,28 @@ public class PostController {
         return ApiResponse.<PageResponse<PostResponse>>builder()
                 .result(postService.getPostsOfFriends(page, size))
                 .build();
+    }
+
+    @PatchMapping("/{postId}/reaction")
+    ApiResponse<PostResponse> handlePostReaction(
+        @PathVariable String postId,
+        @RequestBody ReactionRequest request) {
+
+        log.info("Handling reaction {} for post {}", request.getType(), postId);
+
+        return ApiResponse.<PostResponse>builder()
+            .result(postService.handlePostReaction(postId, request.getType()))
+            .build();
+    }
+
+    @GetMapping("/{postId}/reactions")
+    ApiResponse<List<ReactionUserResponse>> getPostReactions(
+        @PathVariable String postId) {
+
+        log.info("Getting reactions for post {}", postId);
+
+        return ApiResponse.<List<ReactionUserResponse>>builder()
+            .result(postService.getPostReactions(postId))
+            .build();
     }
 }

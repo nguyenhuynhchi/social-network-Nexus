@@ -15,6 +15,8 @@ import java.util.List;
 public class ConversationRequest {
     String type;
 
+    String conversationName;
+
     @Size(min = 1)
     @NotNull
     List<String> participantIds;

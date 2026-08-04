@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${AUTHENTICATION_SERVICE_PORT:8080}
   servlet:
     context-path: /authentication
 
@@ -7,24 +7,24 @@ spring:
   application:
     name: authentication-service
   datasource:
-    url: "jdbc:mysql://localhost:3306/authentication_service"
+    url: ${AUTH_DB_URL:jdbc:mysql://mysql:3306/authentication_service}
     driverClassName: "com.mysql.cj.jdbc.Driver"
-    username: root
-    password: root
+    username: ${AUTH_DB_USERNAME:root}
+    password: ${AUTH_DB_PASSWORD:root}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
   kafka:
-    bootstrap-servers: localhost:9094
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 jwt:
-  signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
-  valid-duration: 36000 # in second
-  refreshable-duration: 36000 # in seconds
+  signerKey: ${JWT_SIGNER_KEY:change-me-to-a-long-random-base64-secret}
+  valid-duration: ${JWT_VALID_DURATION:36000}
+  refreshable-duration: ${JWT_REFRESHABLE_DURATION:36000}
 
 app:
   services:
-    profile: http://localhost:8081/profile
+    profile: ${PROFILE_SERVICE_URL:http://profile-service:8081/profile}

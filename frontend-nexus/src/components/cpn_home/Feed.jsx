@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyPosts, getFriendPosts } from "../../services/postService";
+import { getFriendPosts } from "../../services/postService";
 import { isAuthenticated, logOut } from "../../services/authenticationService";
 import Post from "./Post";
 
@@ -75,53 +75,29 @@ export default function Feed() {
   }, [hasMore]);
 
   return (
-    <div
-      className="flex-1 px-4 md:px-8 py-4 w-full bg-blue-300 min-h-screen"
-    >
-
-      {/* Wrapper cho bài post */}
-      <div className="max-w-3xl mx-auto space-y-6">
+    <div className="flex-1 px-4 md:px-8 py-4 w-full bg-linear-to-b from-blue-300 via-blue-500 to-indigo-400 animate-gradient min-h-screen">
+      <div className="max-w-3xl mx-auto space-y-6"> {/* Tăng khoảng cách giữa các bài post */}
         {posts.map((post, index) => {
-          const uniqueKey = `${post.id}-${index}`;
-
-          if (index === posts.length - 1) {
-            return (
-              <div
-                ref={lastPostRef}
-                key={uniqueKey}
-                className="animate-fadeIn bg-white rounded-2xl shadow-md p-5 hover:shadow-xl transition-shadow"
-              >
-                <Post post={post} />
-              </div>
-            );
-          }
-
+          const isLast = index === posts.length - 1;
+          
           return (
-            <div
-              key={uniqueKey}
-              className="animate-fadeIn bg-white rounded-2xl shadow-md p-5 hover:shadow-xl transition-shadow"
-            >
-              <Post post={post} />
-            </div>
+            <Post 
+              key={`${post.id}-${index}`}
+              ref={isLast ? lastPostRef : null} 
+              post={post} 
+            />
           );
         })}
 
-        {/* Loading */}
+        {/* Loading & Empty state giữ nguyên */}
         {loading && (
           <div className="text-center py-6">
-            <span className="text-gray-600 font-medium animate-pulse">
-              Đang tải...
-            </span>
+            <span className="text-white font-medium animate-pulse">Đang tải...</span>
           </div>
         )}
 
-        {/* Hết bài */}
         {!hasMore && !loading && (
-          <div
-            className="text-center text-gray-700 font-semibold py-10
-                     bg-white/70 backdrop-blur-lg rounded-2xl shadow-md
-                     animate-fadeIn"
-          >
+          <div className="text-center text-gray-700 font-semibold py-10 bg-white/70 backdrop-blur-lg rounded-2xl shadow-md">
             Bạn đã xem hết các bài viết 🥳
           </div>
         )}

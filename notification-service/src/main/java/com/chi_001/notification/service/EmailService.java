@@ -30,7 +30,7 @@ public class EmailService {
     public EmailResponse sendEmail(SendEmailRequest request) {
         EmailRequest emailRequest = EmailRequest.builder()
                 .sender(Sender.builder()
-                        .name("Nexus")
+                        .name("Nexus Community")
                         .email("huynhchi0904@gmail.com")
                         .build())
                 .to(List.of(request.getTo()))
@@ -40,6 +40,8 @@ public class EmailService {
         try {
             return emailClient.sendEmail(apiKey, emailRequest);
         } catch (FeignException e){
+            System.err.println("Feign Error Body: " + e.contentUTF8()); 
+            System.err.println("Feign Status: " + e.status());
             throw new AppException(ErrorCode.CANNOT_SEND_EMAIL);
         }
     }

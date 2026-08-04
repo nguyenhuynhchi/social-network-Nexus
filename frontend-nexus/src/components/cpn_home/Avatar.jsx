@@ -2,7 +2,7 @@ export default function Avatar({ size = 50, src, name }) {
   return (
     <div className="relative group inline-block">
       <img
-        src={src || "/default_avatar_removebg.png"}
+        src={src || "/default_user_avatar.png"}
         alt="avatar"
         className="rounded-full object-cover cursor-pointer border border-gray-300"
         style={{ width: size, height: size }}

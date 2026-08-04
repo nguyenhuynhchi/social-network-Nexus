@@ -1,5 +1,5 @@
 server:
-    port: 8084
+    port: ${CLOUDINARY_UPLOAD_PORT:8084}
     servlet:
         context-path: /cloudinary
 
@@ -9,13 +9,12 @@ spring:
 
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${CLOUDINARY_MAX_REQUEST_SIZE:10MB}
 
 cloudinary:
-  cloud_name: dbkbsz3vy
-  api_key: 862984861691578
-  api_secret: p89CSY2Z1AThzv9a0ena2cx_cqM
-
+  cloud_name: ${CLOUDINARY_CLOUD_NAME:}
+  api_key: ${CLOUDINARY_API_KEY:}
+  api_secret: ${CLOUDINARY_API_SECRET:}
 
 

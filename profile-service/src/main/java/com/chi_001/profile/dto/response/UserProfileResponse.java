@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserProfileResponse {
+
     String id;
     String userId;
     String username;
@@ -19,4 +20,6 @@ public class UserProfileResponse {
     LocalDate dob;
     String city;
     String avatarUrl;
+    String relationshipStatus;
+    Integer commonFriendsCount;
 }

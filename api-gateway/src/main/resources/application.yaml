@@ -1,9 +1,9 @@
 server:
-  port: 8888
+  port: ${API_GATEWAY_PORT:8888}
 
 app:
-  api-prefix: /nexus/v1
-  strip-prefix: 2
+  api-prefix: ${API_PREFIX:/nexus/v1}
+  strip-prefix: ${API_GATEWAY_STRIP_PREFIX:2}
 
 spring:
   application:
@@ -12,28 +12,28 @@ spring:
     gateway:
       routes:
         - id: authentication_service
-          uri: http://localhost:8080
+          uri: ${AUTHENTICATION_SERVICE_BASE_URL:http://authentication-service:8080}
           predicates:
           - Path=${app.api-prefix}/authentication/**
           filters:
           - StripPrefix=${app.strip-prefix}
 
         - id: profile_service
-          uri: http://localhost:8081
+          uri: ${PROFILE_SERVICE_BASE_URL:http://profile-service:8081}
           predicates:
           - Path=${app.api-prefix}/profile/**
           filters:
           - StripPrefix=${app.strip-prefix}
 
         - id: post_service
-          uri: http://localhost:8083
+          uri: ${POST_SERVICE_BASE_URL:http://post-service:8083}
           predicates:
             - Path=${app.api-prefix}/post/**
           filters:
             - StripPrefix=${app.strip-prefix}
 
         - id: chat_service
-          uri: http://localhost:8085
+          uri: ${CHAT_SERVICE_BASE_URL:http://chat-service:8085}
           predicates:
             - Path=${app.api-prefix}/chat/**
           filters:

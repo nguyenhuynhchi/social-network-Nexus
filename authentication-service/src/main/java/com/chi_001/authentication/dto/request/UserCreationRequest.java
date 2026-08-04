@@ -30,7 +30,7 @@ public class UserCreationRequest {
     String email;
 
     @NotBlank(message = "FULLNAME_IS_REQUIRED")
-    @Size(min = 5, message = "INVALID_FULLNAME")
+    @Size(min = 3, message = "INVALID_FULLNAME")
     @Pattern(regexp = "^(\\p{L}+\\s*)+$", message = "INVALID_FULLNAME")
     String fullname;
 

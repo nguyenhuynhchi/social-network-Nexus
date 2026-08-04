@@ -10,7 +10,7 @@ import hidePasswordIcon from "../assets/hidePassword.png";
 
 export default function Login() {
 
-  const logo = "/vite.svg";
+  const logo = "/logo_nexus_nobackground.png";
   const navigate = useNavigate();
 
   // useEffect(() => {
@@ -68,7 +68,7 @@ export default function Login() {
     <div className="flex items-center justify-center w-screen h-screen bg-gray-500">
       <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-xl">
         {/* Logo */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-4 w-full object-contain">
           <img src={logo} alt="Logo" className="w-24 h-24" />
         </div>
         {/* Title */}
@@ -127,9 +127,9 @@ export default function Login() {
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-500">
           Bạn chưa có tài khoản?{" "}
-          <Link to="/registration" className="text-blue-500 hover:underline">
-            Đăng ký ngay !
-          </Link>
+          <div onClick={() => navigate("/registration")} className="text-blue-500 hover:text-blue-800 font-semibold cursor-pointer inline">
+              Đăng ký ngay !
+          </div>
         </div>
       </div>
     </div>

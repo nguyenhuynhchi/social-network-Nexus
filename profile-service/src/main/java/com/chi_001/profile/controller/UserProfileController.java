@@ -6,6 +6,7 @@ import com.chi_001.profile.dto.request.SearchUserRequest;
 import com.chi_001.profile.dto.response.UserProfileResponse;
 import com.chi_001.profile.service.UserProfileService;
 
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -49,12 +50,26 @@ public class UserProfileController {
                 .build();
     }
 
+    @PostMapping("/by-userIds")
+    ApiResponse<Set<UserProfileResponse>> getProfilesByIds(@RequestBody List<String> userIds) {
+        return ApiResponse.<Set<UserProfileResponse>>builder()
+                .result(userProfileService.getProfilesByUserIds(userIds))
+                .build();
+    }
+
     @GetMapping("/my-profile")
     ApiResponse<UserProfileResponse> getMyProfile() {
         return ApiResponse.<UserProfileResponse>builder()
                 .result(userProfileService.getMyProfile())
                 .build();
     }
+
+//    @GetMapping("/of/{userId}")
+//    ApiResponse<UserProfileResponse> getProfileOfOne(@PathVariable String userId) {
+//        return ApiResponse.<UserProfileResponse>builder()
+//            .result(userProfileService.getProfileOfOne(userId))
+//            .build();
+//    }
 
     @PutMapping("/update-profile")
     ApiResponse<UserProfileResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {

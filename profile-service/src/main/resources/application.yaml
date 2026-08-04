@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${PROFILE_SERVICE_PORT:8081}
   servlet:
     context-path: /profile
 
@@ -7,21 +7,26 @@ spring:
   application:
     name: profile-service
   neo4j:
-    uri: bolt://localhost:7687
+    uri: ${NEO4J_URI:bolt://neo4j:7687}
     authentication:
-      username: neo4j
-      password: 123456789
+      username: ${NEO4J_USERNAME:neo4j}
+      password: ${NEO4J_PASSWORD:123456789}
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 20MB
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:20MB}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 file:
-  max-size-mb: 10
-  max-request-size: 20
+  max-size-mb: ${FILE_MAX_SIZE_MB:10}
+  max-request-size: ${FILE_MAX_REQUEST_SIZE:20}
 
 app:
   services:
     cloudinary:
-      url: http://localhost:8084/cloudinary
+      url: ${CLOUDINARY_UPLOAD_URL:http://cloudinary-upload:8084/cloudinary}
 

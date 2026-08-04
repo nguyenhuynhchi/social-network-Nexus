@@ -15,6 +15,7 @@ import java.time.Instant;
 @Document(collection = "web_socket_session")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class WebSocketSession {
+
     @MongoId
     String id;
 

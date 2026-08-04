@@ -5,6 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}", // Đảm bảo dòng này có mặt
+  ],
   plugins: [
     react(),
     tailwindcss(),

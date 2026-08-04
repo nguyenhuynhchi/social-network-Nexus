@@ -6,6 +6,8 @@ import com.chi_001.profile.dto.response.UploadFileResponse;
 import com.chi_001.profile.exception.AppException;
 import com.chi_001.profile.exception.ErrorCode;
 import com.chi_001.profile.repository.httpclient.CloudinaryClient;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.experimental.NonFinal;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -103,6 +105,12 @@ public class UserProfileService {
         var profiles = userProfileRepository.findAll();
 
         return profiles.stream().map(userProfileMapper::toUserProfileResponse).toList();
+    }
+
+    public Set<UserProfileResponse> getProfilesByUserIds(List<String> userIds){
+        var profiles = userProfileRepository.findByUserIdIn(userIds);
+
+        return profiles.stream().map(userProfileMapper::toUserProfileResponse).collect(Collectors.toSet());
     }
 
     public UserProfileResponse getMyProfile() {

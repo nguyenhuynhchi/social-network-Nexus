@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: ${CHAT_SERVICE_PORT:8085}
   servlet:
     context-path: /chat
 spring:
@@ -7,11 +7,11 @@ spring:
     name: chat-service
   data:
     mongodb:
-      uri: mongodb://root:root@localhost:27017/chat-service?authSource=admin
+      uri: ${CHAT_MONGODB_URI:mongodb://root:root@mongodb:27017/chat-service?authSource=admin}
       auto-index-creation: true
 app:
   services:
     profile:
-      url: http://localhost:8081/profile
+      url: ${PROFILE_SERVICE_URL:http://profile-service:8081/profile}
     authentication:
-      url: http://localhost:8080/authentication
+      url: ${AUTHENTICATION_SERVICE_URL:http://authentication-service:8080/authentication}

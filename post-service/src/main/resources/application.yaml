@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: ${POST_SERVICE_PORT:8083}
   servlet:
     context-path: /post
 spring:
@@ -7,18 +7,18 @@ spring:
     name: post-service
   data:
     mongodb:
-      uri: mongodb://root:root@localhost:27017/post-service?authSource=admin
+      uri: ${POST_MONGODB_URI:mongodb://root:root@mongodb:27017/post-service?authSource=admin}
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 20MB
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:20MB}
 file:
-  max-size-mb: 10
-  max-request-size: 20
+  max-size-mb: ${FILE_MAX_SIZE_MB:10}
+  max-request-size: ${FILE_MAX_REQUEST_SIZE:20}
 
 app:
   services:
     profile:
-      url: http://localhost:8081/profile
+      url: ${PROFILE_SERVICE_URL:http://profile-service:8081/profile}
     cloudinary:
-      url: http://localhost:8084/cloudinary
+      url: ${CLOUDINARY_UPLOAD_URL:http://cloudinary-upload:8084/cloudinary}

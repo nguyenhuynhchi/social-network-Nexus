@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class UserService {
+
     UserRepository userRepository;
     RoleRepository roleRepository;
     UserMapper userMapper;
@@ -46,6 +47,11 @@ public class UserService {
     KafkaTemplate<String, Object> kafkaTemplate;
 
     public UserProfileResponse createUser(UserCreationRequest request) {
+
+        if(userRepository.existsByEmail(request.getEmail())) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
         User user = userMapper.toUser(request);
         var username = request.getEmail().split("@")[0];
         user.setUsername(username);
@@ -55,11 +61,11 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
-        user.setEmailVerified(false);
+//        user.setEmailVerified(false);
 
         try {
             user = userRepository.save(user);
-        } catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
 
@@ -70,23 +76,42 @@ public class UserService {
         var profile = profileClient.createProfile(profileRequest);
         profile.getResult().setUserId(user.getId());
 
+        String htmlBody = """
+            <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+                <div style="background-color: #007bff; padding: 20px; text-align: center;">
+                    <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Chào mừng đến với Nexus</h1>
+                </div>
+                <div style="padding: 30px; line-height: 1.6; color: #333333;">
+                    <p style="font-size: 18px;">Xin chào <strong>%s</strong>!</p>
+                    <p>Cảm ơn bạn đã tin tưởng và đăng ký tài khoản tại <strong>Nexus</strong>. Chúng tôi rất hào hứng khi có bạn đồng hành trong cộng đồng này.</p>
+            
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="http://localhost:5173/login" 
+                           style="background-color: #007bff; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+                           Bắt đầu khám phá ngay
+                        </a>
+                    </div>
+            
+                    <p>Nếu bạn có bất kỳ câu hỏi nào, đừng ngần ngại phản hồi email này để được hỗ trợ.</p>
+                    <hr style="border: none; border-top: 1px solid #eeeeee; margin: 20px 0;">
+                    <p style="font-size: 14px; color: #777777;">Trân trọng,<br>Nexus</p>
+                </div>
+                <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #999999;">
+                    © 2025 Nexus Community. Make by Nguyen Huynh Chi.
+                </div>
+            </div>
+            """.formatted(request.getFullname());
+
         NotificationEvent notificationEvent = NotificationEvent.builder()
             .channel("EMAIL")
             .recipient(request.getEmail())
-            .subject("Welcome to Nexus")
-            .body("Hello, " + request.getFullname())
+            .subject("Chào mừng đến với Nexus")
+            .body(htmlBody)
             .build();
 
         // Publish message to kafka
         kafkaTemplate.send("notification-delivery", notificationEvent);
 
-//        var userCreationResponse = userMapper.toUserResponse(user);
-//        userCreationResponse.setId(profile.getResult().getId());
-
-//        return UserProfileResponse.builder()
-//            .id(profile.getResult().getId())
-//            .username(profile.)
-//            .build();
         return profile.getResult();
     }
 
@@ -96,14 +121,16 @@ public class UserService {
 
         log.info("Getting info of userId: {}", userId);
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         return userMapper.toUserResponse(user);
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    //    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse updateUser(String userId, UserUpdateRequest request) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         userMapper.updateUser(user, request);
 //        user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -128,6 +155,7 @@ public class UserService {
     @PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUser(String id) {
         return userMapper.toUserResponse(
-                userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
+            userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
 }

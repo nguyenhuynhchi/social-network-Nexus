@@ -11,6 +11,7 @@ import com.chi_001.authentication.entity.User;
 public interface UserRepository extends JpaRepository<User, String> {
     boolean existsByUsername(String username);
 
+    boolean existsByEmail(String email);
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
 

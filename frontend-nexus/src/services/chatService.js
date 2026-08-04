@@ -15,6 +15,7 @@ export const createConversation = async (data) => {
     API.CREATE_CONVERSATION,
     {
       type: data.type,
+      conversationName: data.conversationName,
       participantIds: data.participantIds,
     },
     {

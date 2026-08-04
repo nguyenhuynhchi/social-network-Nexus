@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Avatar from "./Avatar";
-import { getMyFriends } from "../../services/relationship.js";
+import { getMyFriends } from "../../services/friendshipService.js";
 
 export default function SidebarRight() {
 
@@ -40,7 +40,7 @@ export default function SidebarRight() {
           <Avatar
             // key={friend.id}
             size={50}
-            src={friend.avatarUrl}
+            src={friend.avatarUrl || "/default_user_avatar.png"}
             name={friend.fullname}
           />
         ))}

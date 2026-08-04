@@ -1,6 +1,8 @@
 package com.chi_001.profile.repository;
 
+import com.chi_001.relationship.dto.FriendSuggestion;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
@@ -13,16 +15,11 @@ import java.util.Optional;
 public interface UserProfileRepository extends Neo4jRepository<UserProfile, String> {
     Optional<UserProfile> findByUserId(String userId);
 
-//    //  Kiểm tra xem có bất kỳ mối quan hệ (bạn bè, đang chờ) nào tồn tại giữa 2 user không
-//    @Query("RETURN EXISTS( " +
-//        "MATCH (a:user_profile {userId: $userId1})-[r]-(b:user_profile {userId: $userId2}) " +
-//        "WHERE TYPE(r) IN ['SENT_REQUEST_TO', 'IS_FRIENDS_WITH'] " +
-//        ")")
-//    boolean relationshipExists(String userId1, String userId2);
+    Set<UserProfile> findByUserIdIn(List<String> userIds);
 
     @Query("MATCH (a:user_profile {userId: $userId_1})-[r]->(b:user_profile {userId: $userId_2}) " +
         "RETURN TYPE(r) " +
-        "LIMIT 1") // Chỉ cần tìm 1 mối quan hệ là đủ
+        "LIMIT 1")
     Optional<String> findRelationshipType(String userId_1, String userId_2);
 
     //  Gửi yêu cầu kết bạn - Tạo mối quan hệ SENT_REQUEST_TO (A -> B)
@@ -52,6 +49,15 @@ public interface UserProfileRepository extends Neo4jRepository<UserProfile, Stri
         "DELETE r")
     void removeFriendship(String userId1, String userId2);
 
+    //  Gợi ý bạn bè dựa trên bạn chung (Friends of a Friend - FOAF)
+    @Query("MATCH (me:user_profile {userId: $userId})-[:IS_FRIENDS_WITH]-(friend)-[:IS_FRIENDS_WITH]-(foaf) " +
+        "WHERE NOT (me)-[:IS_FRIENDS_WITH]-(foaf) " +
+        "AND NOT (me)-[:SENT_REQUEST_TO]-(foaf) " +
+        "AND me <> foaf " +
+        "RETURN foaf AS foaf, count(DISTINCT friend) AS commonFriends " +
+        "ORDER BY commonFriends DESC " +
+        "LIMIT $limit")
+    List<FriendSuggestion> suggestFriends(String userId, int limit);
 
     //  Lấy danh sách bạn bè (IS_FRIENDS_WITH)
     @Query("MATCH (a:user_profile {userId: $userId})-[:IS_FRIENDS_WITH]-(friends) " +

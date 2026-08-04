@@ -75,6 +75,14 @@ public class FriendshipController {
             .build();
     }
 
+    @GetMapping("/suggestions")
+    public ApiResponse<List<UserProfileResponse>> getSuggestFriendsList(@RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
+        if (limit <= 0) limit = 10;
+        return ApiResponse.<List<UserProfileResponse>>builder()
+            .result(friendshipService.getSuggestedFriends(limit))
+            .build();
+    }
+
     // Lấy danh sách bạn bè CỦA TÔI
     @GetMapping
     public ApiResponse<List<UserProfileResponse>> getMyFriends() {

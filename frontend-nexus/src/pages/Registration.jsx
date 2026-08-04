@@ -14,7 +14,7 @@ import hidePasswordIcon from "../assets/hidePassword.png";
 
 export default function Registration() {
 
-   const logo = "/vite.svg";
+   const logo = "/logo_nexus_nobackground.png";
    const navigate = useNavigate();
    const [showPassword, setShowPassword] = useState(true);  // Ẩn hiện password
 
@@ -231,7 +231,7 @@ export default function Registration() {
                   </button> */}
                   <LoadingButton
                      loading={loading}
-                     text="Đăng Nhập"
+                     text="Đăng ký"
                      loadingText="Đang đăng nhập..."
                      type="submit"
                   />
@@ -239,9 +239,9 @@ export default function Registration() {
             </form>
             <div className="mt-6 text-center text-sm text-gray-500">
                Đã có tài khoản?{" "}
-               <Link to="/login" className="text-blue-500 hover:underline">
+               <div onClick={() => navigate("/login")} className="text-blue-500 hover:text-blue-800 cursor-pointer inline">
                   Đăng nhập thôi !
-               </Link>
+               </div>
             </div>
          </div>
       </div>

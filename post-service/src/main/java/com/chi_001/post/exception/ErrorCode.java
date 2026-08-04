@@ -10,7 +10,8 @@ public enum ErrorCode {
     INVALID_KEY(1001, "Uncategorized error", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
-    FILE_LIMIT_EXCEEDED(1008, "File size exceeds the limit", HttpStatus.BAD_REQUEST)
+    FILE_LIMIT_EXCEEDED(1008, "File size exceeds the limit", HttpStatus.BAD_REQUEST),
+    POST_NOT_FOUND(1009, "Post not found", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

@@ -22,6 +22,8 @@ public class Conversation {
 
     String type; // GROUP, DIRECT
 
+    String conversationName;
+
     @Indexed(unique = true)
     String participantsHash;
 

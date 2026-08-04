@@ -58,7 +58,7 @@ public class ApplicationInitConfig {
 
                 User user = User.builder()
                         .username(ADMIN_USER_NAME)
-                        .emailVerified(true)
+//                        .emailVerified(true)
                         .password(passwordEncoder.encode(ADMIN_PASSWORD))
                         .roles(roles)
                         .build();

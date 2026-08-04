@@ -1,5 +1,7 @@
 package com.chi_001.post.entity;
 
+import com.chi_001.post.enums.ReactionType;
+import java.util.Map;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +23,9 @@ public class Post {
     String userId;
     String content;
     String fileUrl;
+
+    Map<ReactionType, Long> reactionCounts;
+
     Instant createdDate;
     Instant modifiedDate;
 }
