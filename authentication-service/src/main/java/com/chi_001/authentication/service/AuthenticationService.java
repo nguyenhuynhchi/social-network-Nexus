@@ -20,11 +20,9 @@ import com.chi_001.authentication.dto.request.LogoutRequest;
 import com.chi_001.authentication.dto.request.RefreshRequest;
 import com.chi_001.authentication.dto.response.AuthenticationResponse;
 import com.chi_001.authentication.dto.response.IntrospectResponse;
-import com.chi_001.authentication.entity.InvalidatedToken;
 import com.chi_001.authentication.entity.User;
 import com.chi_001.authentication.exception.AppException;
 import com.chi_001.authentication.exception.ErrorCode;
-import com.chi_001.authentication.repository.InvalidatedTokenRepository;
 import com.chi_001.authentication.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -45,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthenticationService {
 
     UserRepository userRepository;
-    InvalidatedTokenRepository invalidatedTokenRepository;
+    TokenBlacklistService tokenBlacklistService;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -102,10 +100,7 @@ public class AuthenticationService {
             String jit = signToken.getJWTClaimsSet().getJWTID();
             Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
 
-            InvalidatedToken invalidatedToken =
-                InvalidatedToken.builder().id(jit).expiryTime(expiryTime).build();
-
-            invalidatedTokenRepository.save(invalidatedToken);
+            tokenBlacklistService.blacklist(jit, request.getToken(), expiryTime);
         } catch (AppException exception) {
             log.info("Token already expired");
         }
@@ -118,13 +113,7 @@ public class AuthenticationService {
         var jit = signedJWT.getJWTClaimsSet().getJWTID();
         var expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
-        InvalidatedToken invalidatedToken =
-            InvalidatedToken.builder()
-                .id(jit)
-                .expiryTime(expiryTime)
-                .build();
-
-        invalidatedTokenRepository.save(invalidatedToken);
+        tokenBlacklistService.blacklist(jit, request.getToken(), expiryTime);
 
         var userId = signedJWT.getJWTClaimsSet().getSubject();
 
@@ -184,7 +173,7 @@ public class AuthenticationService {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
 
-        if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID())) {
+        if (tokenBlacklistService.contains(signedJWT.getJWTClaimsSet().getJWTID())) {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
 

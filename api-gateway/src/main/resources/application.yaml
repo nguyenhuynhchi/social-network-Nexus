@@ -4,10 +4,16 @@ server:
 app:
   api-prefix: ${API_PREFIX:/nexus/v1}
   strip-prefix: ${API_GATEWAY_STRIP_PREFIX:2}
+  cache:
+    introspection-ttl-seconds: ${GATEWAY_INTROSPECTION_CACHE_TTL_SECONDS:30}
 
 spring:
   application:
     name: api-gateway
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
   cloud:
     gateway:
       routes:
